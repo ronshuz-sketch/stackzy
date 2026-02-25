@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stackzy</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FAFAF8;--surface:#F0EEE8;--ink:#1C1B19;--ink2:#3D3C39;--ink3:#6B6A66;--rule:#DDD9D2;
+  --serif:'Libre Baskerville',Georgia,serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+  --amber:#C87A2A;
+  /* tech stack colours — more vivid */
+  --solidity:#7C4DFF;--hardhat:#F5A623;--react:#1FB8CD;--vite:#B14EE8;
+  --node:#3FAD46;--ethers:#7C4DFF;--rpc:#00897B;--python:#3D7EC8;--langchain:#1DAF6A;
+  --hf:#E8960A;--streamlit:#E84040;--rust:#E8601A;--mongo:#3FAD46;--tailwind:#06B6D4;
+  --socket:#E89020;--polygon:#8B3FF4;--ts:#3B82F6;--ollama:#10B981;--flask:#10B981;--npm:#E84040;
+  --pathway:#E84040;
+  /* accent colours for footer / section pops */
+  --accent-1:#E85D26;--accent-2:#7C4DFF;--accent-3:#10B981;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:22px 60px;background:rgba(250,250,248,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.logo{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--ink);text-decoration:none}
+.nav-cta{font-family:var(--mono);font-size:11px;font-weight:300;letter-spacing:.1em;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.nav-cta:hover{color:var(--ink)}
+
+/* HERO */
+.hero{padding:148px 60px 96px;border-bottom:1px solid var(--rule);min-height:52vh;display:flex;flex-direction:column;justify-content:center}
+.hero-h{font-family:var(--serif);font-size:clamp(64px,9vw,128px);font-weight:400;line-height:.95;letter-spacing:-.025em;color:var(--ink);min-height:1.1em}
+.period{color:var(--amber)}
+.cursor{display:inline-block;width:3px;height:.82em;background:var(--ink);margin-left:5px;vertical-align:middle;animation:blink .7s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-sub{margin-top:36px;font-family:var(--mono);font-size:11px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);opacity:0;transition:opacity .8s ease}
+.hero-sub.show{opacity:1}
+
+/* SECTIONS */
+section{padding:80px 60px;border-bottom:1px solid var(--rule)}
+.eyebrow{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:56px}
+
+/* CLIENTS */
+.clients-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.client-cell{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:40px 36px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:28px;min-height:160px;transition:background .25s}
+.client-cell:hover{background:var(--surface)}
+.logo-area{height:64px;display:flex;align-items:center}
+.logo-area img{max-height:52px;max-width:200px;width:auto;object-fit:contain}
+.client-meta{display:flex;flex-direction:column;gap:4px}
+.client-name{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--ink);line-height:1.2}
+.client-name.iit{color:#8B2020}
+.client-type{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+@media(max-width:860px){.clients-grid{grid-template-columns:1fr}}
+
+/* LAB */
+.lab-bg{background:var(--surface)}
+.lab-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.lab-card{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:36px 32px 32px;display:flex;flex-direction:column}
+.lab-card:last-child:nth-child(odd){grid-column:1/-1;max-width:50%}
+.lab-idx{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.12em;color:var(--rule);margin-bottom:28px}
+.lab-title{font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.25;color:var(--ink);margin-bottom:16px}
+.lab-desc{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.85;color:var(--ink2);margin-bottom:24px;flex:1}
+.lab-stack{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.06em;line-height:2.2;margin-bottom:20px}
+
+/* PROJECTS */
+.proj-row{display:grid;grid-template-columns:32px 1fr 200px 140px;gap:0 36px;align-items:start;padding:36px 0;border-bottom:1px solid var(--rule)}
+.proj-row:first-of-type{border-top:1px solid var(--rule)}
+.proj-num{font-family:var(--mono);font-size:10px;font-weight:300;color:var(--rule);padding-top:4px}
+.proj-title{font-family:var(--serif);font-size:22px;font-weight:400;line-height:1.2;color:var(--ink);margin-bottom:12px;letter-spacing:-.01em}
+.proj-desc{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.75;color:var(--ink2)}
+.proj-meta{padding-top:4px;display:flex;flex-direction:column;gap:10px}
+.proj-client{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.proj-client.health{color:#2A7A5A}
+.proj-client.defi{color:var(--polygon)}
+.proj-client.comp{color:#8B2020}
+.proj-tech{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.05em;line-height:2}
+.proj-action{padding-top:4px;display:flex;flex-direction:column;gap:8px}
+
+/* KEYWORD COLOURS */
+.kw-solidity{color:var(--solidity);font-weight:500}
+.kw-hardhat{color:var(--hardhat);font-weight:500}
+.kw-react{color:var(--react);font-weight:500}
+.kw-vite{color:var(--vite);font-weight:500}
+.kw-node{color:var(--node);font-weight:500}
+.kw-ethers{color:var(--ethers);font-weight:500}
+.kw-rpc{color:var(--rpc);font-weight:500}
+.kw-ethereum{color:var(--solidity);font-weight:500}
+.kw-python{color:var(--python);font-weight:500}
+.kw-langchain{color:var(--langchain);font-weight:500}
+.kw-hf{color:var(--hf);font-weight:500}
+.kw-streamlit{color:var(--streamlit);font-weight:500}
+.kw-rag{color:var(--python);font-weight:500}
+.kw-rust{color:var(--rust);font-weight:500}
+.kw-express{color:var(--ink2);font-weight:500}
+.kw-mongo{color:var(--mongo);font-weight:500}
+.kw-socket{color:var(--socket);font-weight:500}
+.kw-tailwind{color:var(--tailwind);font-weight:500}
+.kw-ts{color:var(--ts);font-weight:500}
+.kw-ollama{color:var(--ollama);font-weight:500}
+.kw-polygon{color:var(--polygon);font-weight:500}
+.kw-vercel{color:var(--ink);font-weight:600}
+.kw-flask{color:var(--flask);font-weight:500}
+
+/* TOKEN COLOURS */
+.t{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.06em}
+.t-solidity{color:var(--solidity)}
+.t-hardhat{color:var(--hardhat)}
+.t-react{color:var(--react)}
+.t-vite{color:var(--vite)}
+.t-node{color:var(--node)}
+.t-ethers{color:var(--ethers)}
+.t-rpc{color:var(--rpc)}
+.t-python{color:var(--python)}
+.t-langchain{color:var(--langchain)}
+.t-hf{color:var(--hf)}
+.t-streamlit{color:var(--streamlit)}
+.t-rust{color:var(--rust)}
+.t-mongo{color:var(--mongo)}
+.t-tailwind{color:var(--tailwind)}
+.t-socket{color:var(--socket)}
+.t-polygon{color:var(--polygon)}
+.t-ts{color:var(--ts)}
+.t-ollama{color:var(--ollama)}
+.t-flask{color:var(--flask)}
+.t-npm{color:var(--npm)}
+.t-pathway{color:var(--pathway)}
+.t-muted{color:var(--ink3)}
+.t-dot{color:var(--rule);margin:0 4px;user-select:none}
+
+/* REPO BUTTON */
+.repo-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);text-decoration:none;border:1px solid var(--rule);padding:9px 14px;transition:border-color .2s,color .2s;white-space:nowrap}
+.repo-btn:hover{border-color:var(--ink2);color:var(--ink)}
+.repo-btn svg{width:11px;height:11px;flex-shrink:0}
+
+/* FOOTER */
+footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:36px}
+.f-brand{display:flex;flex-direction:column;gap:14px}
+.f-logo{font-family:var(--serif);font-size:24px;font-style:italic;color:var(--bg)}
+.f-tagline{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);line-height:1.8}
+.f-domain{font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.1em;color:var(--amber);margin-top:4px}
+.f-col-head{font-family:var(--mono);font-size:9px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:20px}
+.f-link{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;font-weight:300;letter-spacing:.06em;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;margin-bottom:12px}
+.f-link:hover{color:#fff}
+.f-link svg{width:13px;height:13px;flex-shrink:0;opacity:.5}
+.f-link:hover svg{opacity:1}
+.f-address{font-family:var(--mono);font-size:11px;font-weight:300;letter-spacing:.06em;color:rgba(255,255,255,.5);line-height:1.9}
+.f-address strong{color:rgba(255,255,255,.75);font-weight:400}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center}
+.f-copy{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;color:rgba(255,255,255,.25)}
+.f-est{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.12em;color:rgba(255,255,255,.2);text-transform:uppercase}
+@media(max-width:860px){
+  footer{padding:48px 24px 32px}
+  .footer-top{grid-template-columns:1fr;gap:36px}
+  .footer-bottom{flex-direction:column;gap:10px;text-align:center}
+}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
+.r.in{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  nav,section,.hero{padding-left:24px;padding-right:24px}
+  .lab-grid{grid-template-columns:1fr}
+  .lab-card:last-child:nth-child(odd){grid-column:auto;max-width:100%}
+  .proj-row{grid-template-columns:1fr;gap:16px}
+  footer{flex-direction:column;gap:14px;display:block}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Stackzy</a>
+  <a href="mailto:contact@stackzy.io" class="nav-cta">Contact</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-h" id="heroText"><span class="cursor" id="cur"></span></div>
+  <p class="hero-sub" id="heroSub">IIT Bhilai, India &mdash; Est. 2024</p>
+</div>
+
+<!-- WORKED WITH -->
+<section>
+  <p class="eyebrow r">Worked with</p>
+  <div class="clients-grid r">
+
+    <!-- IIT Bhilai -->
+    <div class="client-cell">
+      <div class="logo-area">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 64" height="56" aria-label="IIT Bhilai">
+          <!-- Outer ring -->
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#8B2020" stroke-width="2.5"/>
+          <!-- Inner ring -->
+          <circle cx="32" cy="32" r="20" fill="none" stroke="#8B2020" stroke-width="1.2"/>
+          <!-- Flame -->
+          <path d="M32 9 C29 14 31 17 32 19 C33 17 35 14 32 9Z" fill="#C0392B"/>
+          <!-- Open book -->
+          <path d="M18 28 Q32 23 46 28 L46 44 Q32 39 18 44Z" fill="#FFF5F5" stroke="#8B2020" stroke-width="1.4"/>
+          <line x1="32" y1="23" x2="32" y2="44" stroke="#8B2020" stroke-width="1.2"/>
+          <!-- Dots -->
+          <circle cx="14" cy="32" r="1.8" fill="#8B2020"/>
+          <circle cx="50" cy="32" r="1.8" fill="#8B2020"/>
+          <!-- IIT wordmark beside emblem -->
+          <text x="70" y="26" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#8B2020">IIT</text>
+          <text x="70" y="44" font-family="Georgia,serif" font-size="14" font-weight="700" fill="#8B2020">Bhilai</text>
+        </svg>
+      </div>
+      <div class="client-meta">
+        <div class="client-name iit">IIT Bhilai</div>
+        <div class="client-type">Research Institution</div>
+      </div>
+    </div>
+
+    <!-- Intervue -->
+    <div class="client-cell">
+      <div class="logo-area">
+        <!-- Intervue wordmark — purple-to-blue gradient with speech bubble icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 56" height="52" aria-label="Intervue">
+          <defs>
+            <linearGradient id="ivGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#6C3CE2"/>
+              <stop offset="100%" style="stop-color:#3B82F6"/>
+            </linearGradient>
+          </defs>
+          <!-- Icon: rounded square with play arrow -->
+          <rect x="0" y="10" width="38" height="36" rx="8" fill="url(#ivGrad)"/>
+          <polygon points="14,20 14,36 30,28" fill="white"/>
+          <!-- Wordmark -->
+          <text x="48" y="36" font-family="Inter,system-ui,sans-serif" font-size="22" font-weight="700" fill="#1a1a2e" letter-spacing="-0.5">intervue</text>
+        </svg>
+      </div>
+      <div class="client-meta">
+        <div class="client-name">Intervue</div>
+        <div class="client-type">Interview-as-a-Service</div>
+      </div>
+    </div>
+
+    <!-- Alfred Capital -->
+    <div class="client-cell">
+      <div class="logo-area">
+        <!-- Alfred Capital — geometric "A" in purple with bold wordmark -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" height="52" aria-label="Alfred Capital">
+          <defs>
+            <linearGradient id="acGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#8B3FF4"/>
+              <stop offset="100%" style="stop-color:#5B21B6"/>
+            </linearGradient>
+          </defs>
+          <!-- "A" filled triangle mark -->
+          <polygon points="22,48 38,8 54,48" fill="url(#acGrad)"/>
+          <polygon points="27,37 49,37 38,14" fill="white"/>
+          <!-- Wordmark -->
+          <text x="66" y="30" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="800" fill="#1C1B19" letter-spacing="-0.2">ALFRED</text>
+          <text x="66" y="46" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="300" fill="#5B21B6" letter-spacing="2">CAPITAL</text>
+        </svg>
+      </div>
+      <div class="client-meta">
+        <div class="client-name">Alfred Capital</div>
+        <div class="client-type">DeFi / Fintech</div>
+      </div>
+    </div>
+
+    <!-- SPRING Lab -->
+    <div class="client-cell">
+      <div class="logo-area">
+        <!-- SPRING Lab — shield icon + wordmark in teal/green -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 60" height="54" aria-label="SPRING Lab">
+          <defs>
+            <linearGradient id="spGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#059669"/>
+              <stop offset="100%" style="stop-color:#0D9488"/>
+            </linearGradient>
+          </defs>
+          <!-- Shield shape -->
+          <path d="M28 6 L50 6 L50 34 Q39 50 28 56 Q17 50 6 34 L6 6 Z" fill="url(#spGrad)"/>
+          <!-- Lock icon inside shield -->
+          <rect x="18" y="28" width="20" height="14" rx="2" fill="white"/>
+          <path d="M22 28 Q22 20 28 20 Q34 20 34 28" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="28" cy="35" r="2.5" fill="#059669"/>
+          <!-- Wordmark -->
+          <text x="62" y="28" font-family="Inter,system-ui,sans-serif" font-size="18" font-weight="800" fill="#047857" letter-spacing="1">SPRING</text>
+          <text x="62" y="46" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="400" fill="#6B7280" letter-spacing="0.3">Security &amp; Privacy Lab</text>
+        </svg>
+      </div>
+      <div class="client-meta">
+        <div class="client-name">SPRING Lab</div>
+        <div class="client-type">Security &amp; Privacy Research</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BUILT IN-HOUSE LAB -->
+<section class="lab-bg">
+  <p class="eyebrow r">Built in-house</p>
+  <div class="lab-grid r">
+
+    <!-- 01 -->
+    <div class="lab-card">
+      <div class="lab-idx">01</div>
+      <div class="lab-title">Asset Tokenization Platform</div>
+      <p class="lab-desc">Full-stack dApp for tokenizing real-world assets on <span class="kw-ethereum">Ethereum</span>. <span class="kw-solidity">Solidity</span> smart contracts handle issuance, ownership transfer, and on-chain governance. <span class="kw-react">React</span> + <span class="kw-vite">Vite</span> frontend connects via <span class="kw-hardhat">Hardhat</span>-deployed contracts on a local or test network.</p>
+      <div class="lab-stack"><span class="t-solidity">Solidity</span><span class="t-dot">·</span><span class="t-hardhat">Hardhat</span><span class="t-dot">·</span><span class="t-react">React</span><span class="t-dot">·</span><span class="t-vite">Vite</span></div>
+      <a href="https://github.com/devansh0331/IITBhilai_AssetTokenization" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>View Repo</a>
+    </div>
+
+    <!-- 02 -->
+    <div class="lab-card">
+      <div class="lab-idx">02</div>
+      <div class="lab-title">Blockchain Explorer CLI</div>
+      <p class="lab-desc">Command-line tool to inspect IIT Bhilai's private blockchain via an <span class="kw-rpc">RPC</span> endpoint. Browse blocks, transactions, accounts, and live network health — formatted table output and a packaged Windows binary for zero-install use. Built in <span class="kw-node">Node.js</span> using <span class="kw-ethers">ethers.js</span>.</p>
+      <div class="lab-stack"><span class="t-node">Node.js</span><span class="t-dot">·</span><span class="t-ethers">ethers.js</span><span class="t-dot">·</span><span class="t-rpc">JSON-RPC</span></div>
+      <a href="https://github.com/devansh0331/IITBhilai_BlockExplorer" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>View Repo</a>
+    </div>
+
+    <!-- 03 -->
+    <div class="lab-card">
+      <div class="lab-idx">03</div>
+      <div class="lab-title">P2P Solar Energy Trading</div>
+      <p class="lab-desc">Decentralised marketplace for trading surplus solar energy between producers and consumers. <span class="kw-solidity">Solidity</span> smart contracts enforce trade settlement on-chain; <span class="kw-react">React</span> frontend deployed live on <span class="kw-vercel">Vercel</span> — participants list, bid, and confirm transfers without any intermediary.</p>
+      <div class="lab-stack"><span class="t-solidity">Solidity</span><span class="t-dot">·</span><span class="t-hardhat">Hardhat</span><span class="t-dot">·</span><span class="t-react">React</span></div>
+      <a href="https://github.com/devansh0331/SolarEnergyTrading" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>View Repo</a>
+    </div>
+
+    <!-- 04 -->
+    <div class="lab-card">
+      <div class="lab-idx">04</div>
+      <div class="lab-title">RAG / LLM Application</div>
+      <p class="lab-desc"><span class="kw-rag">Retrieval-Augmented Generation</span> pipeline that grounds LLM responses in user-supplied documents. <span class="kw-hf">HuggingFace</span> model backend, <span class="kw-langchain">LangChain</span> orchestration, and a <span class="kw-streamlit">Streamlit</span> interface — queryable over any uploaded corpus without retraining the model.</p>
+      <div class="lab-stack"><span class="t-python">Python</span><span class="t-dot">·</span><span class="t-langchain">LangChain</span><span class="t-dot">·</span><span class="t-hf">HuggingFace</span><span class="t-dot">·</span><span class="t-streamlit">Streamlit</span></div>
+      <a href="https://github.com/nishant9083/llm_application" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>View Repo</a>
+    </div>
+
+    <!-- 05 -->
+    <div class="lab-card">
+      <div class="lab-idx">05</div>
+      <div class="lab-title">Shell AI — Agentic CLI</div>
+      <p class="lab-desc"><span class="kw-ts">TypeScript</span> CLI agent published on npm as <code style="font-family:var(--mono);font-size:12px">@shell-ai/cli</code>. Uses a ReAct (Reason-Act) loop to translate natural language into terminal tool calls — file reads, shell execution, web search, long-term memory. Supports <span class="kw-rpc">MCP</span> server integration for custom tools. Runs entirely on local <span class="kw-ollama">Ollama</span> models — zero network calls.</p>
+      <div class="lab-stack"><span class="t-ts">TypeScript</span><span class="t-dot">·</span><span class="t-ollama">Ollama</span><span class="t-dot">·</span><span class="t-muted">MCP</span><span class="t-dot">·</span><span class="t-npm">npm</span></div>
+      <a href="https://github.com/nishant9083/shell-ai" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>View Repo</a>
+    </div>
+
+    <!-- 06 -->
+    <div class="lab-card">
+      <div class="lab-idx">06</div>
+      <div class="lab-title">AI LaTeX Editor</div>
+      <p class="lab-desc">Browser-based LaTeX editor with Monaco, real-time PDF compilation, and a floating AI assistant. Supports <span class="kw-hf">Gemini</span>, OpenAI, <span class="kw-langchain">Anthropic</span>, and local <span class="kw-ollama">Ollama</span> — user brings their own key or endpoint. Write, debug, fix, and diff-preview AI suggestions before accepting. Live on <span class="kw-vercel">Vercel</span> with a companion <span class="kw-express">Express</span> proxy for LaTeX compilation.</p>
+      <div class="lab-stack"><span class="t-ts">TypeScript</span><span class="t-dot">·</span><span class="t-react">React</span><span class="t-dot">·</span><span class="t-vite">Vite</span><span class="t-dot">·</span><span class="t-ollama">Ollama</span><span class="t-dot">·</span><span class="t-node">Express</span></div>
+      <a href="https://github.com/nishant9083/ai-latex-editor" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>View Repo</a>
+    </div>
+
+    <!-- 07 -->
+    <div class="lab-card">
+      <div class="lab-idx">07</div>
+      <div class="lab-title">CodePilot — VS Code Extension</div>
+      <p class="lab-desc">AI coding assistant for VS Code — published on the <strong>VS Code Marketplace</strong>. Connects to local <span class="kw-ollama">Ollama</span> models: no API keys, no telemetry, fully offline. Right-click any selection to explain, refactor, or document with AI. Context-aware: feeds selected files or the full workspace into the prompt. Chat history persisted per workspace.</p>
+      <div class="lab-stack"><span class="t-ts">TypeScript</span><span class="t-dot">·</span><span class="t-ollama">Ollama</span><span class="t-dot">·</span><span class="t-muted">VS Code API</span></div>
+      <a href="https://github.com/nishant9083/ai-assistant" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>Marketplace</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- SELECTED PROJECTS -->
+<section>
+  <p class="eyebrow r">Selected projects</p>
+
+  <!-- 01: MedC -->
+  <div class="proj-row r">
+    <div class="proj-num">01</div>
+    <div>
+      <div class="proj-title">MedC — Healthcare Platform</div>
+      <p class="proj-desc">Full-stack healthcare web app with a live production domain. <span class="kw-express">Express</span> REST API handles auth, patient records, and file uploads via structured controllers, middleware, and models. <span class="kw-react">React</span> + <span class="kw-tailwind">Tailwind</span> frontend built with 313 commits across 2 contributors — the most commit-dense project in the profile.</p>
+    </div>
+    <div class="proj-meta">
+      <div class="proj-client health">Healthcare</div>
+      <div class="proj-tech"><span class="t-react">React</span><span class="t-dot">·</span><span class="t-vite">Vite</span><br><span class="t-node">Node.js</span><span class="t-dot">·</span><span class="t-node">Express</span><br><span class="t-mongo">MongoDB</span><span class="t-dot">·</span><span class="t-tailwind">Tailwind</span></div>
+    </div>
+    <div class="proj-action">
+      <a href="https://github.com/devansh0331/MedC-Client" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>Client</a>
+      <a href="https://github.com/devansh0331/MedC-Server" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>Server</a>
+    </div>
+  </div>
+
+  <!-- 02: Intervue Poll -->
+  <div class="proj-row r">
+    <div class="proj-num">02</div>
+    <div>
+      <div class="proj-title">Intervue — Live Poll System</div>
+      <p class="proj-desc">Real-time polling system built as a task for Intervue, a developer interview platform. <span class="kw-socket">Socket.io</span> handles live vote broadcasting across connected clients with zero page refresh. Separate <span class="kw-node">Node.js</span> backend deployed independently on <span class="kw-vercel">Vercel</span> — both repos live in production.</p>
+    </div>
+    <div class="proj-meta">
+      <div class="proj-client">Intervue</div>
+      <div class="proj-tech"><span class="t-react">React</span><span class="t-dot">·</span><span class="t-vite">Vite</span><br><span class="t-node">Node.js</span><span class="t-dot">·</span><span class="t-socket">Socket.io</span><br><span class="t-tailwind">Tailwind</span></div>
+    </div>
+    <div class="proj-action">
+      <a href="https://github.com/devansh0331/Intervue-Poll" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>Client</a>
+      <a href="https://github.com/devansh0331/Intervue-Poll-Server" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>Server</a>
+    </div>
+  </div>
+
+  <!-- 03: Alfred Capital -->
+  <div class="proj-row r">
+    <div class="proj-num">03</div>
+    <div>
+      <div class="proj-title">Alfred Capital — Arbitrage Bot</div>
+      <p class="proj-desc"><span class="kw-rust">Rust</span>-based arbitrage detection bot on the <span class="kw-polygon">Polygon</span> network. Periodically queries WETH/USDC prices across QuickSwap and SushiSwap via Uniswap V2-style routers, calculates net profit after simulated gas cost, and logs actionable opportunities. Built as a fintech engineering task — the only <span class="kw-rust">Rust</span> project in the team's public work.</p>
+    </div>
+    <div class="proj-meta">
+      <div class="proj-client defi">Alfred Capital</div>
+      <div class="proj-tech"><span class="t-rust">Rust</span><span class="t-dot">·</span><span class="t-muted">ethers-rs</span><br><span class="t-muted">tokio</span><span class="t-dot">·</span><span class="t-polygon">Polygon</span><br><span class="t-muted">QuickSwap · SushiSwap</span></div>
+    </div>
+    <div class="proj-action">
+      <a href="https://github.com/devansh0331/AlfredCapital_Task02" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>View Repo</a>
+    </div>
+  </div>
+
+  <!-- 04: InterIIT -->
+  <div class="proj-row r">
+    <div class="proj-num">04</div>
+    <div>
+      <div class="proj-title">Inter-IIT Tech Meet 13 — Agentic RAG</div>
+      <p class="proj-desc">Full-stack submission for the HP problem statement at Inter-IIT Tech Meet 13 — India's premier inter-IIT engineering competition. Agentic <span class="kw-rag">RAG</span> pipeline built on <span class="kw-polygon">Pathway</span>'s real-time vector store: multi-agent query augmentation, document retrieval, and a <span class="kw-flask">Flask</span> + <span class="kw-socket">Socket.IO</span> backend streamed live into a <span class="kw-react">React</span> chat interface with speech recognition. 4 contributors, 2 forks.</p>
+    </div>
+    <div class="proj-meta">
+      <div class="proj-client comp">Inter-IIT · HP</div>
+      <div class="proj-tech"><span class="t-python">Python</span><span class="t-dot">·</span><span class="t-flask">Flask</span><br><span class="t-muted">Pathway</span><span class="t-dot">·</span><span class="t-socket">Socket.IO</span><br><span class="t-react">React</span><span class="t-dot">·</span><span class="t-muted">OpenAI</span></div>
+    </div>
+    <div class="proj-action">
+      <a href="https://github.com/nishant9083/InterIIT_13_HP3" target="_blank" class="repo-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>View Repo</a>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-top">
+
+    <!-- Brand -->
+    <div class="f-brand">
+      <span class="f-logo">Stackzy</span>
+      <div class="f-tagline">Full-stack engineering &amp; AI/Web3 delivery<br>Operating from IIT Bhilai, India</div>
+      <div class="f-domain">stackzy.io</div>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <div class="f-col-head">Contact</div>
+      <a href="tel:+919407936653" class="f-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+        +91 94079 36653
+      </a>
+      <a href="https://wa.me/919407936653" target="_blank" class="f-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.852L.057 23.5l5.79-1.518A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.374l-.36-.213-3.713.974.99-3.616-.232-.374A9.818 9.818 0 1112 21.818z"/></svg>
+        WhatsApp
+      </a>
+      <a href="mailto:contact@stackzy.io" class="f-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        contact@stackzy.io
+      </a>
+    </div>
+
+    <!-- Location -->
+    <div>
+      <div class="f-col-head">Location</div>
+      <div class="f-address">
+        <strong>Stackzy</strong><br>
+        Indian Institute of Technology Bhilai<br>
+        Bhilai, Chhattisgarh<br>
+        India — 491002
+      </div>
+    </div>
+
+  </div>
+  <div class="footer-bottom">
+    <span class="f-copy">&copy; 2025–2026 Stackzy. All rights reserved.</span>
+    <span class="f-est">Est. 2024 &mdash; IIT Bhilai</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+  // TYPEWRITER
+  var el = document.getElementById('heroText');
+  var cur = document.getElementById('cur');
+  var sub = document.getElementById('heroSub');
+  var text = 'We deliver';
+  var i = 0;
+  setTimeout(function type(){
+    if(i < text.length){
+      el.insertBefore(document.createTextNode(text[i]), cur);
+      i++;
+      setTimeout(type, 60 + Math.random()*40);
+    } else {
+      setTimeout(function(){
+        var dot = document.createElement('span');
+        dot.className = 'period';
+        dot.textContent = '.';
+        el.insertBefore(dot, cur);
+        setTimeout(function(){
+          cur.style.animation = 'blink .7s step-end 4';
+          cur.style.animationFillMode = 'forwards';
+          setTimeout(function(){
+            cur.style.display = 'none';
+            sub.classList.add('show');
+          }, 2400);
+        }, 320);
+      }, 180);
+    }
+  }, 500);
+
+  // SCROLL REVEAL
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in')}});
+  },{threshold:0.12});
+  document.querySelectorAll('.r').forEach(function(el){obs.observe(el)});
+})();
+</script>
+</body>
+</html>
