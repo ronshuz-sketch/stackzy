@@ -61,6 +61,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-body{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:0 80px;max-width:900px}
 .hero-p{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.9;color:var(--ink2)}
 .hero-credential{margin-top:40px;padding-top:32px;border-top:1px solid var(--rule);font-family:var(--serif);font-style:italic;font-size:15px;font-weight:400;line-height:1.7;color:var(--ink);max-width:600px;letter-spacing:-.01em}
+.hero-services{list-style:none;margin-top:12px;padding:0;display:flex;flex-direction:column;gap:0}
+.hero-services li{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);padding:7px 0;border-bottom:1px solid var(--rule);position:relative;padding-left:14px}
+.hero-services li::before{content:'';position:absolute;left:0;top:50%;width:5px;height:1px;background:var(--amber);transform:translateY(-50%)}
 .hero-stats{margin-top:48px;display:flex;gap:48px;padding-top:40px;border-top:1px solid var(--rule)}
 .hs-num{font-family:var(--serif);font-style:italic;font-weight:700;font-size:32px;color:var(--ink);letter-spacing:-.02em;line-height:1}
 .hs-num .ab{color:var(--amber)}
@@ -105,7 +108,7 @@ section{padding:80px 60px;border-bottom:1px solid var(--rule)}
 .lab-idx{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.12em;color:var(--rule);margin-bottom:28px}
 .lab-title{font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.25;color:var(--ink);margin-bottom:16px}
 .lab-desc{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.85;color:var(--ink2);margin-bottom:24px;flex:1}
-.lab-stack{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.06em;line-height:2.2;margin-bottom:20px}
+.lab-stack{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.06em;line-height:2.2;margin-bottom:20px;word-break:break-word;white-space:normal;flex-wrap:wrap}
 
 /* PROJECTS */
 .proj-row{display:grid;grid-template-columns:32px 1fr 200px 140px;gap:0 36px;align-items:start;padding:36px 0;border-bottom:1px solid var(--rule)}
@@ -316,7 +319,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
   <a href="#" class="logo">
     <span class="logo-word">stackzy</span><span class="logo-slash">/</span><span class="logo-dot">.</span>
   </a>
-  <a href="/cdn-cgi/l/email-protection#a4c7cbcad0c5c7d0e4d7d0c5c7cfdedd8acdcb" class="nav-cta">Contact</a>
+  <a href="mailto:contact@stackzy.io" class="nav-cta">Contact</a>
 </nav>
 
 <div class="hero">
@@ -325,8 +328,16 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
     We build for consequence<span class="ab">.</span>
   </h1>
   <div class="hero-body">
-    <p class="hero-p">Stackzy operates out of IIT Bhilai, An institution that rewards correctness over confidence, and ships over noise. That environment shaped how we think about software: as something that either holds or doesn't.</p>
-    <p class="hero-p">We work across full-stack, AI, and Web3.</p>
+    <p class="hero-p">Stackzy operates out of IIT Bhilai, an institution that rewards correctness over confidence, and ships over noise. That environment shaped how we think about software: as something that either holds or doesn't.</p>
+    <div class="hero-p">We work across:
+      <ul class="hero-services">
+        <li>Full-Stack Development</li>
+        <li>AI / LLM Integration</li>
+        <li>Web3 &amp; Smart Contracts</li>
+        <li>System Architecture</li>
+        <li>DevOps &amp; Infrastructure</li>
+      </ul>
+    </div>
   </div>
   <div class="hero-credential r">
     Every engineer on your project has 2–4 years of production experience and comes from an IIT background. You work directly with the people who build.
@@ -789,9 +800,9 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
     <!-- Contact -->
     <div>
       <div class="f-col-head">Contact</div>
-      <a href="/cdn-cgi/l/email-protection#03606c6d77626077437077626068797a2d6a6c" class="f-link">
+      <a href="mailto:contact@stackzy.io" class="f-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
-        <span class="__cf_email__" data-cfemail="45262a2b3124263105363124262e3f3c6b2c2a">[email&#160;protected]</span>
+        contact@stackzy.io
       </a>
       <a href="tel:+919407936653" class="f-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
@@ -821,7 +832,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
   <div class="footer-bottom">
     <span class="f-copy">&copy; 2025, 2026 Stackzy. All rights reserved.</span>
     <span class="f-est">
-      <a href="/cdn-cgi/l/email-protection#482b27263c292b3c083b3c292b233231662127" style="color:rgba(255,255,255,.35);text-decoration:none;font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'"><span class="__cf_email__" data-cfemail="80e3efeef4e1e3f4c0f3f4e1e3ebfaf9aee9ef">[email&#160;protected]</span></a>
+      <a href="mailto:contact@stackzy.io" style="color:rgba(255,255,255,.35);text-decoration:none;font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">contact@stackzy.io</a>
       , Est. 2024, IIT Bhilai
     </span>
   </div>
@@ -829,7 +840,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
 
 </div><!-- end #main-site -->
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 (function(){
   // SCROLL REVEAL
   var obs = new IntersectionObserver(function(entries){
@@ -1008,7 +1019,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
       <div class="legal-section-title">Confidentiality</div>
       <p class="legal-p">Both parties acknowledge that in the course of an engagement, confidential information may be shared. Stackzy will not disclose, publish, or share any confidential business information, technical specifications, unreleased product details, or proprietary data shared by the Client to any third party without express written consent, except as required by applicable law.</p>
       <p class="legal-p">This obligation survives the termination of the Agreement for a period of <strong>two years</strong> from the date of last disclosure. For matters involving trade secrets, the obligation continues indefinitely.</p>
-      <p class="legal-p">Clients requiring a more formal or detailed confidentiality arrangement are encouraged to enter into Stackzy's separate NDA, which is available upon request at <a href="/cdn-cgi/l/email-protection#e3808c8d97828097a39097828088999acd8a8c"><span class="__cf_email__" data-cfemail="51323e3f2530322511222530323a2b287f383e">[email&#160;protected]</span></a>.</p>
+      <p class="legal-p">Clients requiring a more formal or detailed confidentiality arrangement are encouraged to enter into Stackzy's separate NDA, which is available upon request at <a href="mailto:contact@stackzy.io">contact@stackzy.io</a>.</p>
     </div>
 
     <div class="legal-section">
@@ -1046,7 +1057,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
 
     <div class="legal-contact-box">
       <p>For all Agreement-related correspondence:<br>
-        <a href="/cdn-cgi/l/email-protection#3b5854554f5a584f7b484f5a58504142155254"><span class="__cf_email__" data-cfemail="096a66677d686a7d497a7d686a627370276066">[email&#160;protected]</span></a><br>
+        <a href="mailto:contact@stackzy.io">contact@stackzy.io</a><br>
         Stackzy, Indian Institute of Technology Bhilai<br>
         Bhilai, Chhattisgarh, India 491002</p>
     </div>
@@ -1083,7 +1094,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
       <div class="legal-section-title">Parties and Purpose</div>
       <p class="legal-p">This Non-Disclosure and Confidentiality Agreement ("Agreement") is entered into between <strong>Stackzy</strong>, operating from IIT Bhilai, Chhattisgarh, India ("Stackzy") and the individual or entity seeking to engage or already engaged with Stackzy's services ("Disclosing Party" or "Receiving Party" as applicable, collectively "the Parties").</p>
       <p class="legal-p">This Agreement is mutual — both parties may disclose and both parties may receive confidential information. The purpose of this Agreement is to protect the confidential information of both parties during the evaluation, negotiation, and execution of a potential or existing business relationship, without limiting either party's ability to develop independently.</p>
-      <p class="legal-p">This Agreement becomes effective upon written confirmation by both parties. Confirmation by email to <a href="/cdn-cgi/l/email-protection#35565a5b4154564175464154565e4f4c1b5c5a"><span class="__cf_email__" data-cfemail="35565a5b4154564175464154565e4f4c1b5c5a">[email&#160;protected]</span></a> constitutes valid and legally binding execution.</p>
+      <p class="legal-p">This Agreement becomes effective upon written confirmation by both parties. Confirmation by email to <a href="mailto:contact@stackzy.io">contact@stackzy.io</a> constitutes valid and legally binding execution.</p>
     </div>
 
     <div class="legal-section">
@@ -1181,7 +1192,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
 
     <div class="legal-contact-box">
       <p>To execute this NDA or for confidentiality enquiries:<br>
-        <a href="/cdn-cgi/l/email-protection#d8bbb7b6acb9bbac98abacb9bbb3a2a1f6b1b7"><span class="__cf_email__" data-cfemail="9dfef2f3e9fcfee9ddeee9fcfef6e7e4b3f4f2">[email&#160;protected]</span></a> — Subject: NDA Request<br>
+        <a href="mailto:contact@stackzy.io">contact@stackzy.io</a> — Subject: NDA Request<br>
         Stackzy, IIT Bhilai, Bhilai, Chhattisgarh, India 491002</p>
     </div>
   </div>
@@ -1285,7 +1296,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
         <li><strong>Portability:</strong> You may request your information in a structured, machine-readable format where technically feasible</li>
         <li><strong>Objection:</strong> You may object to processing of your information in circumstances where we rely on legitimate interest as our basis for processing</li>
       </ul>
-      <p class="legal-p">To exercise any of these rights, contact us at <a href="/cdn-cgi/l/email-protection#4c2f2322382d2f380c3f382d2f273635622523"><span class="__cf_email__" data-cfemail="dab9b5b4aebbb9ae9aa9aebbb9b1a0a3f4b3b5">[email&#160;protected]</span></a> with the subject line "Privacy Rights Request". We will respond within 30 days. In certain cases involving complex or multiple requests, we may take up to 60 days, and will inform you of the extension.</p>
+      <p class="legal-p">To exercise any of these rights, contact us at <a href="mailto:contact@stackzy.io">contact@stackzy.io</a> with the subject line "Privacy Rights Request". We will respond within 30 days. In certain cases involving complex or multiple requests, we may take up to 60 days, and will inform you of the extension.</p>
     </div>
 
     <div class="legal-section">
@@ -1312,7 +1323,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
 
     <div class="legal-contact-box">
       <p>Privacy enquiries and rights requests:<br>
-        <a href="/cdn-cgi/l/email-protection#d5b6babba1b4b6a195a6a1b4b6beafacfbbcba"><span class="__cf_email__" data-cfemail="e2818d8c96838196a29196838189989bcc8b8d">[email&#160;protected]</span></a> — Subject: Privacy Rights Request<br>
+        <a href="mailto:contact@stackzy.io">contact@stackzy.io</a> — Subject: Privacy Rights Request<br>
         Stackzy, IIT Bhilai, Bhilai, Chhattisgarh, India 491002</p>
     </div>
   </div>
