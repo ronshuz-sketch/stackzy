@@ -53,21 +53,58 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-cta:hover{color:var(--ink)}
 
 
-/* HERO / ABOUT-TOP */
-.hero{padding:148px 60px 80px;border-bottom:1px solid var(--rule);min-height:56vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
-.hero-eyebrow{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.26em;text-transform:uppercase;color:var(--amber);margin-bottom:32px}
-.hero-h{font-family:var(--serif);font-style:italic;font-weight:700;font-size:clamp(40px,5.5vw,72px);line-height:1.05;letter-spacing:-.03em;color:var(--ink);max-width:760px}
+/* HERO — conversion-optimised */
+.hero{padding:148px 60px 0;border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.hero-inner{display:grid;grid-template-columns:1fr 420px;gap:0 72px;align-items:start;padding-bottom:72px}
+.hero-left{display:flex;flex-direction:column}
+.hero-eyebrow{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.26em;text-transform:uppercase;color:var(--amber);margin-bottom:28px}
+.hero-h{font-family:var(--serif);font-style:italic;font-weight:700;font-size:clamp(36px,4.8vw,66px);line-height:1.04;letter-spacing:-.03em;color:var(--ink)}
 .hero-h .ab{color:var(--amber)}
-.hero-body{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:0 80px;max-width:900px}
-.hero-p{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.9;color:var(--ink2)}
-.hero-credential{margin-top:40px;padding-top:32px;border-top:1px solid var(--rule);font-family:var(--serif);font-style:italic;font-size:15px;font-weight:400;line-height:1.7;color:var(--ink);max-width:600px;letter-spacing:-.01em}
-.hero-services{list-style:none;margin-top:12px;padding:0;display:flex;flex-direction:column;gap:0}
-.hero-services li{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);padding:7px 0;border-bottom:1px solid var(--rule);position:relative;padding-left:14px}
-.hero-services li::before{content:'';position:absolute;left:0;top:50%;width:5px;height:1px;background:var(--amber);transform:translateY(-50%)}
-.hero-stats{margin-top:48px;display:flex;gap:48px;padding-top:40px;border-top:1px solid var(--rule)}
-.hs-num{font-family:var(--serif);font-style:italic;font-weight:700;font-size:32px;color:var(--ink);letter-spacing:-.02em;line-height:1}
-.hs-num .ab{color:var(--amber)}
-.hs-desc{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-top:6px}
+.hero-sub{margin-top:20px;font-family:var(--sans);font-size:15px;font-weight:400;line-height:1.75;color:var(--ink2);max-width:560px}
+.hero-sub strong{color:var(--ink);font-weight:600}
+/* fascination bullets */
+.hero-bullets{list-style:none;margin-top:36px;padding:0;display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+.hero-bullets li{font-family:var(--sans);font-size:13.5px;font-weight:400;line-height:1.6;color:var(--ink2);padding:14px 0 14px 22px;border-bottom:1px solid var(--rule);position:relative}
+.hero-bullets li::before{content:'→';position:absolute;left:0;top:14px;font-family:var(--mono);font-size:11px;color:var(--amber);font-weight:400}
+.hero-bullets li strong{color:var(--ink);font-weight:600}
+/* social proof strip */
+.hero-proof{margin-top:32px;display:flex;gap:40px;padding-top:28px;border-top:1px solid var(--rule)}
+.hp-num{font-family:var(--serif);font-style:italic;font-weight:700;font-size:28px;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.hp-num .ab{color:var(--amber)}
+.hp-desc{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-top:5px}
+/* RIGHT COL — opt-in form + visual */
+.hero-right{display:flex;flex-direction:column;gap:0}
+.hero-form-card{background:var(--ink);padding:36px 32px 32px;border-radius:0}
+.hfc-label{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px}
+.hfc-offer{font-family:var(--serif);font-style:italic;font-weight:700;font-size:20px;line-height:1.25;color:#fff;margin-bottom:6px;letter-spacing:-.02em}
+.hfc-offer .ab{color:var(--amber)}
+.hfc-sub{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,.5);margin-bottom:24px;line-height:1.6}
+.hfc-field{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:12px 14px;font-family:var(--sans);font-size:13px;font-weight:300;color:#fff;outline:none;margin-bottom:10px;transition:border-color .2s}
+.hfc-field::placeholder{color:rgba(255,255,255,.3)}
+.hfc-field:focus{border-color:var(--amber)}
+.hfc-btn{width:100%;background:var(--amber);border:none;padding:14px;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:#fff;cursor:pointer;transition:opacity .2s;margin-top:4px}
+.hfc-btn:hover{opacity:.88}
+.hfc-fine{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.1em;color:rgba(255,255,255,.25);margin-top:12px;line-height:1.7}
+/* deliverable visual */
+.hero-deliverable{border:1px solid var(--rule);border-top:none;padding:28px 28px 24px;background:var(--surface)}
+.hd-label{font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:16px}
+.hd-mockup{border:1px solid var(--rule);background:var(--bg);padding:0;overflow:hidden}
+.hd-bar{height:32px;background:var(--ink);display:flex;align-items:center;padding:0 14px;gap:6px}
+.hd-dot{width:8px;height:8px;border-radius:50%}
+.hd-content{padding:16px}
+.hd-line{height:8px;background:var(--rule);border-radius:2px;margin-bottom:8px}
+.hd-line.amber{background:rgba(200,122,42,.35);width:60%}
+.hd-line.short{width:45%}
+.hd-line.med{width:75%}
+.hd-badge{display:inline-block;margin-top:10px;background:rgba(200,122,42,.12);border:1px solid rgba(200,122,42,.3);font-family:var(--mono);font-size:9px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);padding:5px 10px}
+@media(max-width:960px){
+  .hero{padding:120px 24px 0}
+  .hero-inner{grid-template-columns:1fr;gap:48px 0}
+  .hero-right{max-width:480px}
+}
+@media(max-width:860px){
+  .hero-proof{flex-wrap:wrap;gap:24px}
+}
 
 /* TECH TICKER */
 .tech-ticker{padding:0 60px;height:52px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:12px;overflow:hidden}
@@ -77,9 +114,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .ticker-word.tw-semi{font-weight:500;color:var(--ink2);opacity:.75}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @media(max-width:860px){
-  .hero{padding:120px 24px 64px}
-  .hero-body{grid-template-columns:1fr}
-  .hero-stats{flex-wrap:wrap;gap:32px}
   .tech-ticker{padding:0 24px;gap:8px}
   .ticker-word{font-size:11px}
 }
@@ -319,28 +353,97 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
   <a href="#" class="logo">
     <span class="logo-word">stackzy</span><span class="logo-slash">/</span><span class="logo-dot">.</span>
   </a>
-  <a href="mailto:contact@stackzy.io" class="nav-cta">Contact</a>
+  <a href="/cdn-cgi/l/email-protection#bdded2d3c9dcdec9fdcec9dcded6c7c493d4d2" class="nav-cta">Contact</a>
 </nav>
 
 <div class="hero">
-  <div class="hero-eyebrow">Full-stack · AI · Web3, IIT Bhilai, Est. 2024</div>
-  <h1 class="hero-h">
-    We build for consequence<span class="ab">.</span>
-  </h1>
-  <div class="hero-body">
-    <p class="hero-p">Stackzy operates out of IIT Bhilai, an institution that rewards correctness over confidence, and ships over noise. That environment shaped how we think about software: as something that either holds or doesn't.</p>
-    <div class="hero-p">We work across:
-      <ul class="hero-services">
-        <li>Full-Stack Development</li>
-        <li>AI / LLM Integration</li>
-        <li>Web3 &amp; Smart Contracts</li>
-        <li>System Architecture</li>
-        <li>DevOps &amp; Infrastructure</li>
+  <div class="hero-inner">
+
+    <!-- LEFT: copy -->
+    <div class="hero-left r">
+      <div class="hero-eyebrow">Full-stack · AI · Web3 — IIT Bhilai, Est. 2024</div>
+
+      <h1 class="hero-h">
+        Get your product built<br>to production in <span class="ab">weeks,</span><br>not quarters<span class="ab">.</span>
+      </h1>
+
+      <p class="hero-sub">
+        You have a deadline, a vision, and a budget. What you <strong>don't</strong> have is time to babysit junior devs, re-explain scope, or receive code you can't ship.<br><br>
+        Stackzy gives you <strong>IIT-trained engineers — directly — who own the outcome</strong> from kickoff to production.
+      </p>
+
+      <ul class="hero-bullets">
+        <li><strong>You speak to the engineer building it</strong> — no account managers, no relay chain, no lost context between calls</li>
+        <li><strong>Production code, day one</strong> — every line ships with error handling, docs, and Git history a senior would be proud of</li>
+        <li><strong>AI &amp; Web3 as native capabilities</strong> — not bolt-ons. LangChain, RAG pipelines, Solidity contracts, real-time architectures all built in-house</li>
+        <li><strong>Fixed scope. Written agreement. Zero hidden fees</strong> — you approve every change before a single commit touches it</li>
+        <li><strong>14-day defect guarantee</strong> — we fix material defects in delivered work at zero additional charge, no questions, no invoices</li>
       </ul>
+
+      <div class="hero-proof">
+        <div>
+          <div class="hp-num">12<span class="ab">+</span></div>
+          <div class="hp-desc">Production projects</div>
+        </div>
+        <div>
+          <div class="hp-num">4</div>
+          <div class="hp-desc">Industries served</div>
+        </div>
+        <div>
+          <div class="hp-num">2–4<span class="ab">yr</span></div>
+          <div class="hp-desc">Avg. engineer experience</div>
+        </div>
+        <div>
+          <div class="hp-num">IIT</div>
+          <div class="hp-desc">Every engineer</div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="hero-credential r">
-    Every engineer on your project has 2 to 4 years of production experience and comes from an IIT background. You work directly with the people who build.
+
+    <!-- RIGHT: opt-in + visual -->
+    <div class="hero-right">
+
+      <!-- Opt-in form -->
+      <div class="hero-form-card">
+        <div class="hfc-label">Get the free build brief</div>
+        <div class="hfc-offer">Tell us what you're building.<br>We'll send a <span class="ab">free</span> technical scope &amp; estimate.</div>
+        <div class="hfc-sub">No commitment. No sales pitch. Just a clear breakdown of what it takes to build your product — from engineers who've done it.</div>
+        <input class="hfc-field" type="text" placeholder="Your name" autocomplete="name" />
+        <input class="hfc-field" type="email" placeholder="Work email" autocomplete="email" />
+        <button class="hfc-btn" type="button" onclick="this.textContent='✓ Request sent — we\'ll be in touch within 24 hrs'">Get my free scope &amp; estimate →</button>
+        <div class="hfc-fine">Sent within 24 hours · No spam, ever · Unsubscribe any time</div>
+      </div>
+
+      <!-- What they're getting — deliverable mockup -->
+      <div class="hero-deliverable">
+        <div class="hd-label">What you receive</div>
+        <div class="hd-mockup">
+          <div class="hd-bar">
+            <div class="hd-dot" style="background:#E85D26"></div>
+            <div class="hd-dot" style="background:#F5A623"></div>
+            <div class="hd-dot" style="background:#3FAD46"></div>
+            <span style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.35);margin-left:10px;letter-spacing:.1em">stackzy_scope_estimate.pdf</span>
+          </div>
+          <div class="hd-content">
+            <div class="hd-line amber"></div>
+            <div class="hd-line med"></div>
+            <div class="hd-line short"></div>
+            <div class="hd-line" style="width:88%"></div>
+            <div class="hd-line med"></div>
+            <div class="hd-line short" style="width:30%"></div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <div class="hd-badge">Timeline</div>
+              <div class="hd-badge">Tech stack</div>
+              <div class="hd-badge">Fixed cost</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:14px;font-family:var(--mono);font-size:9px;font-weight:300;letter-spacing:.12em;color:var(--ink3);line-height:1.9">
+          A written breakdown covering: deliverables, recommended stack,<br>realistic timeline, and a fixed-price quote — no ranges, no asterisks.
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -800,9 +903,9 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
     <!-- Contact -->
     <div>
       <div class="f-col-head">Contact</div>
-      <a href="mailto:contact@stackzy.io" class="f-link">
+      <a href="/cdn-cgi/l/email-protection#41222e2f3520223501323520222a3b386f282e" class="f-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
-        contact@stackzy.io
+        <span class="__cf_email__" data-cfemail="75161a1b0114160135060114161e0f0c5b1c1a">[email&#160;protected]</span>
       </a>
       <a href="tel:+919407936653" class="f-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
@@ -832,7 +935,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
   <div class="footer-bottom">
     <span class="f-copy">&copy; 2025, 2026 Stackzy. All rights reserved.</span>
     <span class="f-est">
-      <a href="mailto:contact@stackzy.io" style="color:rgba(255,255,255,.35);text-decoration:none;font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">contact@stackzy.io</a>
+      <a href="/cdn-cgi/l/email-protection#3e5d51504a5f5d4a7e4d4a5f5d554447105751" style="color:rgba(255,255,255,.35);text-decoration:none;font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.35)'"><span class="__cf_email__" data-cfemail="22414d4c56434156625156434149585b0c4b4d">[email&#160;protected]</span></a>
       , Est. 2024, IIT Bhilai
     </span>
   </div>
@@ -840,7 +943,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
 
 </div><!-- end #main-site -->
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
 (function(){
   // SCROLL REVEAL
   var obs = new IntersectionObserver(function(entries){
@@ -1019,7 +1122,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
       <div class="legal-section-title">Confidentiality</div>
       <p class="legal-p">Both parties acknowledge that in the course of an engagement, confidential information may be shared. Stackzy will not disclose, publish, or share any confidential business information, technical specifications, unreleased product details, or proprietary data shared by the Client to any third party without express written consent, except as required by applicable law.</p>
       <p class="legal-p">This obligation survives the termination of the Agreement for a period of <strong>two years</strong> from the date of last disclosure. For matters involving trade secrets, the obligation continues indefinitely.</p>
-      <p class="legal-p">Clients requiring a more formal or detailed confidentiality arrangement are encouraged to enter into Stackzy's separate NDA, which is available upon request at <a href="mailto:contact@stackzy.io">contact@stackzy.io</a>.</p>
+      <p class="legal-p">Clients requiring a more formal or detailed confidentiality arrangement are encouraged to enter into Stackzy's separate NDA, which is available upon request at <a href="/cdn-cgi/l/email-protection#c5a6aaabb1a4a6b185b6b1a4a6aebfbcebacaa"><span class="__cf_email__" data-cfemail="b3d0dcddc7d2d0c7f3c0c7d2d0d8c9ca9ddadc">[email&#160;protected]</span></a>.</p>
     </div>
 
     <div class="legal-section">
@@ -1057,7 +1160,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
 
     <div class="legal-contact-box">
       <p>For all Agreement-related correspondence:<br>
-        <a href="mailto:contact@stackzy.io">contact@stackzy.io</a><br>
+        <a href="/cdn-cgi/l/email-protection#61020e0f1500021521121500020a1b184f080e"><span class="__cf_email__" data-cfemail="482b27263c292b3c083b3c292b233231662127">[email&#160;protected]</span></a><br>
         Stackzy, Indian Institute of Technology Bhilai<br>
         Bhilai, Chhattisgarh, India 491002</p>
     </div>
@@ -1094,7 +1197,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
       <div class="legal-section-title">Parties and Purpose</div>
       <p class="legal-p">This Non-Disclosure and Confidentiality Agreement ("Agreement") is entered into between <strong>Stackzy</strong>, operating from IIT Bhilai, Chhattisgarh, India ("Stackzy") and the individual or entity seeking to engage or already engaged with Stackzy's services ("Disclosing Party" or "Receiving Party" as applicable, collectively "the Parties").</p>
       <p class="legal-p">This Agreement is mutual — both parties may disclose and both parties may receive confidential information. The purpose of this Agreement is to protect the confidential information of both parties during the evaluation, negotiation, and execution of a potential or existing business relationship, without limiting either party's ability to develop independently.</p>
-      <p class="legal-p">This Agreement becomes effective upon written confirmation by both parties. Confirmation by email to <a href="mailto:contact@stackzy.io">contact@stackzy.io</a> constitutes valid and legally binding execution.</p>
+      <p class="legal-p">This Agreement becomes effective upon written confirmation by both parties. Confirmation by email to <a href="/cdn-cgi/l/email-protection#3e5d51504a5f5d4a7e4d4a5f5d554447105751"><span class="__cf_email__" data-cfemail="beddd1d0cadfddcafecdcadfddd5c4c790d7d1">[email&#160;protected]</span></a> constitutes valid and legally binding execution.</p>
     </div>
 
     <div class="legal-section">
@@ -1192,7 +1295,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
 
     <div class="legal-contact-box">
       <p>To execute this NDA or for confidentiality enquiries:<br>
-        <a href="mailto:contact@stackzy.io">contact@stackzy.io</a> — Subject: NDA Request<br>
+        <a href="/cdn-cgi/l/email-protection#eb8884859f8a889fab989f8a88809192c58284"><span class="__cf_email__" data-cfemail="c6a5a9a8b2a7a5b286b5b2a7a5adbcbfe8afa9">[email&#160;protected]</span></a> — Subject: NDA Request<br>
         Stackzy, IIT Bhilai, Bhilai, Chhattisgarh, India 491002</p>
     </div>
   </div>
@@ -1296,7 +1399,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
         <li><strong>Portability:</strong> You may request your information in a structured, machine-readable format where technically feasible</li>
         <li><strong>Objection:</strong> You may object to processing of your information in circumstances where we rely on legitimate interest as our basis for processing</li>
       </ul>
-      <p class="legal-p">To exercise any of these rights, contact us at <a href="mailto:contact@stackzy.io">contact@stackzy.io</a> with the subject line "Privacy Rights Request". We will respond within 30 days. In certain cases involving complex or multiple requests, we may take up to 60 days, and will inform you of the extension.</p>
+      <p class="legal-p">To exercise any of these rights, contact us at <a href="/cdn-cgi/l/email-protection#167579786277756256656277757d6c6f387f79"><span class="__cf_email__" data-cfemail="62010d0c16030116221116030109181b4c0b0d">[email&#160;protected]</span></a> with the subject line "Privacy Rights Request". We will respond within 30 days. In certain cases involving complex or multiple requests, we may take up to 60 days, and will inform you of the extension.</p>
     </div>
 
     <div class="legal-section">
@@ -1323,7 +1426,7 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
 
     <div class="legal-contact-box">
       <p>Privacy enquiries and rights requests:<br>
-        <a href="mailto:contact@stackzy.io">contact@stackzy.io</a> — Subject: Privacy Rights Request<br>
+        <a href="/cdn-cgi/l/email-protection#72111d1c06131106320106131119080b5c1b1d"><span class="__cf_email__" data-cfemail="f2919d9c86939186b28186939199888bdc9b9d">[email&#160;protected]</span></a> — Subject: Privacy Rights Request<br>
         Stackzy, IIT Bhilai, Bhilai, Chhattisgarh, India 491002</p>
     </div>
   </div>
@@ -1453,17 +1556,4 @@ footer{padding:72px 60px 48px;background:var(--ink);color:var(--bg)}
       <p class="legal-p">Stackzy will not knowingly contribute engineering services to projects that:</p>
       <ul class="legal-list">
         <li>Violate applicable Indian or international law</li>
-        <li>Facilitate financial fraud, money laundering, or the evasion of sanctions</li>
-        <li>Involve deceptive or manipulative user interfaces designed to exploit users</li>
-        <li>Facilitate creation or distribution of malware, spyware, or other harmful software</li>
-        <li>Involve child exploitation or abuse material in any form</li>
-        <li>Serve as infrastructure for targeted harassment, surveillance, or stalking</li>
-        <li>Otherwise conflict with Stackzy's professional ethical standards, which are applied in our sole discretion</li>
-      </ul>
-      <p class="legal-p">Discovery that an engagement falls into any of the above categories, even after work has commenced, entitles Stackzy to immediate termination with refund of fees proportional to undelivered work and no further liability.</p>
-    </div>
-
-    <div class="legal-section">
-      <div class="legal-section-num">09</div>
-      <div class="legal-section-title">Ongoing Retainers and Maintenance</div>
-      <p class="legal-p">After project delivery, some clients choose to engage Stackzy on an ongoing basis for maintenance, feature development, or technical advisory. These arrangements are governed by a separate written retainer agreement and m
+        <li>Facilitate financial
